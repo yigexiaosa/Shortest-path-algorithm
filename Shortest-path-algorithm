@@ -9,12 +9,12 @@ void aaa(int d1,int d,int D[],int U[],int S[],int c,int b,int m,int c1,int s[],i
         for(d1=1; d1<=d; d1++){if(D[(d+1)*c1+d1]>0){
             if((D[(d+1)*c1+d1]+S[c1]< dis[d1+(d+1)*1]||dis[d1+(d+1)*1]==0)&&dis[d1+(d+1)*1]!=-1){
                 dis[d1+(d+1)*1]=D[(d+1)*c1+d1]+S[c1];
-                dis[d1+(d+1)*2]=c1;//将每个点的距离输入零时储存中
+                dis[d1+(d+1)*2]=c1;//Enter the distance of each point into 00:00 storage
             }
             printf("dis[%d+(%d+1)*1]=%d\n",d1,d,dis[d1+(d+1)*1]);
             if((dis[d1+(d+1)*1]<U[d1+(d+1)*1]||U[d1+(d+1)*1]==0)&&(dis[d1+(d+1)*1]>0)&&U[d1+(d+1)*1]!=-1){
                     U[d1+(d+1)*1]=dis[d1+(d+1)*1];
-                    U[d1+(d+1)*2]=dis[d1+(d+1)*2];//找出最短的一条线
+                    U[d1+(d+1)*2]=dis[d1+(d+1)*2];//Find the shortest line
                     printf("%d\n%d\n\n",U[d1+(d+1)*1],U[d1+(d+1)*2]);
             }}
         }
@@ -23,13 +23,13 @@ void aaa(int d1,int d,int D[],int U[],int S[],int c,int b,int m,int c1,int s[],i
             if(U[d1+(d+1)*1]>0&&(U[d1+(d+1)*1]<m||m<=0)){
                 printf("%d\n%d\n\n",U[d1+(d+1)*1],U[d1+(d+1)*2]);
                 m=U[d1+(d+1)*1];
-                printf("m=%d\nd1=%d\n",m,d1);//将最短线里的最短的一条计入S中
+                printf("m=%d\nd1=%d\n",m,d1);//Count the shortest of the shortest lines in S
                 ii=U[d1+(d+1)*2];
                 i=d1;
                 printf("i=%d,d1=%d\n",i,d1);
             }
         }
-        printf("结束,S[%d]=%d,下一次的起点是:%d\n",i,m,i);
+        printf("End,S[%d]=%d,The starting point for the next time is:%d\n",i,m,i);
         S[i]=m;
         c1=i;
         U[i+(d+1)*1]=-1;
@@ -39,26 +39,25 @@ void aaa(int d1,int d,int D[],int U[],int S[],int c,int b,int m,int c1,int s[],i
             D[(d+1)*i+ii]=-1;
             //printf("%d\n",D[(d+1)*c1+i]);
         }
-        dis[ii+(d+1)*1]=-1;//断开与最短边起点的所有连线
+        dis[ii+(d+1)*1]=-1;//The point at which the starting point of the shortest edge is disconnected
         dis[ii+(d+1)*2]=-1;
-
-        j++;//用于结束套娃
+        j++;//Used to end the nesting doll
         aaa(d1,d,D,U,S,c,b,m,c1,s,dis);
     }
 }
 int main()
 {
     printf("输入点数 边数 出发点：");
-    int d,d1,						   //输入的点数
-        b,b1,							  //输入的边数
-        c;         						 //出发点
+    int d,d1,						   //Number of points entered
+        b,b1,							  //Number of sides entered
+        c;         						 //Starting point
     scanf("%d%d%d",&d,&b,&c);
-    int* S= new int[d+1];          //被记录的出发点到一点的最短距离
-    int* U=new int[(d+1)*3];          // 为被记录的已知的点（我也不知道有啥用）
-    int* D=new int[(d+1)*(d+1)]; //输入的一点到一点的距离
+    int* S= new int[d+1];          //The shortest distance from the recorded starting point to a point
+    int* U=new int[(d+1)*3];          //A known point that is recorded
+    int* D=new int[(d+1)*(d+1)]; //The distance from a point to a point entered
     int i;
     for(d1=0; d1<=d; d1++){
-        S[d1]=0;            //初始化数值
+        S[d1]=0;            //Initialization value
         for(i=0; i<=d; i++){
             D[(d+1)*d1+i]=0;
             D[(d+1)*i+d1]=0;
@@ -69,7 +68,7 @@ int main()
     }
     int x,y,z;
     for(d1=1; d1<=b; d1++){
-        printf("输入第%d条边的起点 终点 长度：",d1);//录入图形数据
+        printf("Enter th%dThe length of the start and end of the edge：",d1);//Input graphic data
         scanf("%d%d%d",&x,&y,&z);
         D[(d+1)*x+y]=z;
         D[(d+1)*y+x]=z;
@@ -77,14 +76,14 @@ int main()
     }
     int m,c1=c;
     int* s=new int[d+1];
-    int* dis=new int[0+(d+1)*2];//[0【终点】+(d+1)*2]=【起点代数】//[0【终点】+(d+1)*1]=【与原起点的距离】
+    int* dis=new int[0+(d+1)*2];//[0【Destination】+(d+1)*2]=【Starting algebra】//[0【Destination】+(d+1)*1]=【The distance from the original starting point】
     for(d1=0;d1<=(d+1)*2;d1++){
-        dis[d1]=0;//初始化dis
+        dis[d1]=0;//Initializationdis
     }
     aaa(d1,d,D,U,S,c,b,m,c1,s,dis);
     for(d1=1; d1<=d; d1++){
-        printf("起点与第%d个点的最短距离是%d\n",d1,S[d1]);//输出各点最短距离
+        printf("The starting point and the first%dThe shortest distance of a point is%d\n",d1,S[d1]);//Output the shortest distance of each point
     }
-    printf("距离为零则表示未连接");
+    printf("If the distance is zero, it means that it is not connected.");
     return 0;
 }
